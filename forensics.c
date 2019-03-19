@@ -73,6 +73,9 @@ int main(int argc, char* argv[], char* envp[]){
         strftime(time_buffer,80,"%FT%T", accessed_stamp);
         printf("%s\n", time_buffer);
     }
+    else if (argv[1][1] == 'r') {
+        //readdir(argv[2]);
+    }
     
     
 
