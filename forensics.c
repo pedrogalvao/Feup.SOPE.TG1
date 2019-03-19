@@ -41,13 +41,40 @@ int main(int argc, char* argv[], char* envp[]){
      //      }
     
     
-    
+    /*
     char *name = "./processFile";
     char *arguments[2];
     arguments[0] = name;
     arguments[1] = argv[1];
     arguments[2] = NULL;
-   execvp(name, arguments);
+    */
+     
+    char time_buffer[80];
+    struct stat file_info;
+    if(stat(argv[1],&file_info) < 0) return 1;
+
+   // struct tm *created_stamp = localtime(&file_info.st_atime);
+   //strftime(time_buffer,80,"%FT%T", created_stamp);
+    if (argv[1][0] != '-') {
+        printf("%s", argv[1]);
+        printf(",");
+        printf("tipo ficheiro,"); // falta ver como se ve o tipo de ficheiro, no exemplo ASCCI TEXT
+        printf("%ld,", file_info.st_size);
+
+        struct tm *created_stamp = localtime(&file_info.st_atime);
+        strftime(time_buffer,80,"%FT%T", created_stamp);
+        printf("%s,", time_buffer);
+
+        struct tm *modified_stamp = localtime(&file_info.st_ctime);
+        strftime(time_buffer,80,"%FT%T", modified_stamp);
+        printf("%s,", time_buffer);
+
+        struct tm *accessed_stamp = localtime(&file_info.st_mtime);
+        strftime(time_buffer,80,"%FT%T", accessed_stamp);
+        printf("%s\n", time_buffer);
+    }
+    
+    
 
     exit(0);
 }
